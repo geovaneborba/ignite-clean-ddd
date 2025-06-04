@@ -2,7 +2,7 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/type/optional'
 
-interface QuestionProps {
+export interface AnswerProps {
   authorId: UniqueEntityID
   questionId: UniqueEntityID
   content: string
@@ -10,7 +10,7 @@ interface QuestionProps {
   updatedAt?: Date
 }
 
-export class Answer extends Entity<QuestionProps> {
+export class Answer extends Entity<AnswerProps> {
   /**
    * Factory method to create an Answer entity.
    * This method allows for the creation of an Answer entity with the provided properties.
@@ -21,7 +21,7 @@ export class Answer extends Entity<QuestionProps> {
    * @returns A new Answer entity.
    */
   static create(
-    props: Optional<QuestionProps, 'createdAt'>,
+    props: Optional<AnswerProps, 'createdAt'>,
     id?: UniqueEntityID
   ) {
     const answer = new Answer( // call the constructor of the parent class Entity with the provided properties
