@@ -8,11 +8,7 @@ export class UniqueEntityID {
   }
 
   public equals(id: UniqueEntityID): boolean {
-    return id.toValue() === this.value
-  }
-
-  toValue(): string {
-    return this.value
+    return id.toString() === this.value
   }
 
   toString(): string {
