@@ -7,6 +7,10 @@ export class Slug {
     this.value = value
   }
 
+  static create(slug: string): Slug {
+    return new Slug(slug)
+  }
+
   /**
    * Cria um slug a partir do título fornecido.
    *
