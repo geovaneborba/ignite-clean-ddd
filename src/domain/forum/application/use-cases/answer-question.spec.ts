@@ -1,24 +1,16 @@
-import { IAnswersRepository } from '../repositories/answers-repository'
-import { AnswerQuestionUseCase } from './answer-question'
+import { makeAnswerQuestionSut } from 'tests/factories/make-answer-question-sut'
 
-import { Answer } from '@/domain/forum/enterprise/entities/answer'
-
-describe('AnswerQuestionUseCase', () => {
-  const fakeAnswerRepository: IAnswersRepository = {
-    create: async (answer: Answer) => {
-      return
-    },
-  }
-
+describe('Answer Question Use Case', () => {
   it('should be able to create an answer', async () => {
-    const answerQuestion = new AnswerQuestionUseCase(fakeAnswerRepository)
+    const { sut, inMemoryAnswersRepository } = makeAnswerQuestionSut()
 
-    const answer = await answerQuestion.execute({
+    const result = await sut.execute({
       questionId: '1',
       instructorId: '1',
       content: 'Conteúdo da respostas',
     })
 
-    expect(answer.content).toEqual('Conteúdo da respostas')
+    expect(result.isRight()).toBe(true)
+    expect(inMemoryAnswersRepository.items[0]).toEqual(result.value?.answer)
   })
 })

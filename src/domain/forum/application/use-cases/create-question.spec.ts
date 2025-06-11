@@ -1,23 +1,19 @@
-import { CreateQuestionUseCase } from './create-question'
-import { IQuestionsRepository } from '../repositories/questions-repository'
-import { Question } from '../../enterprise/entities/question'
+import { makeCreateQuestionSut } from 'tests/factories/make-create-question-sut'
 
-const fakeQuestionsRepository: IQuestionsRepository = {
-  create: async (question: Question) => {},
-}
+describe('Create Question Use Case', () => {
+  it('should be able to create a question', async () => {
+    const { sut, inMemoryQuestionsRepository } = makeCreateQuestionSut()
 
-describe('CreateQuestionUseCase', () => {
-  it('create question', async () => {
-    const sut = new CreateQuestionUseCase(fakeQuestionsRepository)
-
-    const { question } = await sut.execute({
+    const result = await sut.execute({
       title: 'new question',
       content: 'content of the question',
       authorId: '1',
     })
 
-    expect(question.id).toBeTruthy()
-    expect(question.title).toBe('new question')
-    expect(question.content).toBe('content of the question')
+    expect(result.isRight()).toBe(true)
+
+    expect(result.value?.question.id).toEqual(
+      inMemoryQuestionsRepository.items[0].id
+    )
   })
 })
